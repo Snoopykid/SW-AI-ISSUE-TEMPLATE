@@ -22,7 +22,7 @@
 힌트:
 - 여는 괄호 '('는 스택에 push
 - 닫는 괄호 ')'를 만나면 스택에서 pop
-- 마지막에 스택이 비어있으면 True
+- 마지막에 스택이 비어있으면 True 
 """
 
 def is_valid_parentheses(s):
@@ -42,10 +42,21 @@ def is_valid_parentheses(s):
     ## : 닫는 괄호 ')'면
     ## 스택이 비어있으면 False 반환
     ## 아니면 스택에서 pop
-    pass
+    for i in s:
+        if i == "(":
+            stack.append(0)
+        elif i == ")":
+            if stack:
+                stack.pop()
+            else:
+                pass
     
     # TODO: 반복이 끝나면 스택이 비어있는지 확인
-    pass
+    if stack :
+        return False
+    else :
+        return True
+
 
 # 테스트 케이스
 if __name__ == "__main__":

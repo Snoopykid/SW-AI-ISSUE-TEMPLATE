@@ -20,7 +20,7 @@
   LCM = 144
 
 힌트:
-- 유클리드 호제법: gcd(a, b) = gcd(b, a % b)
+C- 유클리드 호제법: gcd(a, Db) = gcd(b, a % b)
 - LCM 공식: lcm(a, b) = (a × b) / gcd(a, b)
 """
 
@@ -64,13 +64,14 @@ def lcm(a, b):
     최소공배수 계산
     
     Args:
-        a, b: 두 양의 정수
     
+VF        a, b: 두 양의 정수
+        a, b: 두 양의 정수
     Returns:
         최소공배수
     """
     # TODO: LCM 계산
-    return (a * b) / gcd(a, b)
+    return (a * b) // gcd(a, b)
 
 def extended_gcd(a, b):
     """
@@ -87,11 +88,16 @@ def extended_gcd(a, b):
     # base case: b가 0이면 (a, 1, 0) 반환    
     # recursive case
     # 역추적하며 x, y 계산
-    if b == 0:
-        exgcd = a, 1, 0
-        return exgcd
+    r0, x0, y0 = a, 1, 0
+    r1, x1, y1 = b, 0, 1
 
-    a * x + b * y = gcd(a, b)
+    while r1 !=  0:
+        q = r0 // r1
+        r0, r1 = r1, r0 - q * r1
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+
+    return r0, x0, y0
 
 def is_prime(n):
     """
@@ -107,10 +113,20 @@ def is_prime(n):
     # n이 2보다 작으면 False
     # 2부터 sqrt(n)까지 나누어 떨어지는지 확인    
     # 3부터 sqrt(n)까지 홀수만 확인
-    if n <= 2:
+    if n < 2 :
         return False
+    if n == 2 or n == 3:
+        return True
 
-    for 
+    sqn = int(n**0.5)
+
+    for i in range(2, sqn+1):
+        if n % i == 0:
+            return False
+
+    return True
+                
+
 
 # 테스트 케이스
 if __name__ == "__main__":
