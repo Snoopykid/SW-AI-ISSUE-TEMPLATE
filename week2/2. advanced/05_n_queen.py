@@ -67,8 +67,34 @@ def n_queens(n: int) -> int:
     #   def place(row):
     #       ...
     #   place(0)
-    #   return count
-    pass
+    #   return count 
+    cols = [0] * n
+    count = 0
+
+    def place(row):
+      nonlocal count
+      
+      if row == n :
+        count += 1
+        return count
+      
+      for c in range(n):
+        is_safe = True
+
+        for i in range(row):
+          queenCol= cols[i] == c
+          queenX= abs(cols[i] - c) == row - i
+          if queenCol or queenX:
+             is_safe = False
+             break
+          
+        if is_safe :
+          cols[row] = c
+          place(row+1)
+
+    place(0)
+              
+    return count
 
 
 if __name__ == "__main__":
