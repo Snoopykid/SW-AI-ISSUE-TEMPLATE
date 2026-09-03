@@ -20,7 +20,7 @@
   LCM = 144
 
 힌트:
-C- 유클리드 호제법: gcd(a, Db) = gcd(b, a % b)
+- 유클리드 호제법: gcd(a, b) = gcd(b, a % b)
 - LCM 공식: lcm(a, b) = (a × b) / gcd(a, b)
 """
 
@@ -40,7 +40,8 @@ def gcd(a, b):
     if b == 0:
         return a
 
-    return gcd(b, a%b) 
+    return gcd(b, a % b)
+
 
 def gcd_iterative(a, b):
     """
@@ -55,23 +56,25 @@ def gcd_iterative(a, b):
     # TODO: 반복문으로 구현
     # b가 0이 될 때까지 반복
     
-    while b != 0:
+    while b != 0 :
+
         a, b = b, a%b
     return a
+
 
 def lcm(a, b):
     """
     최소공배수 계산
     
     Args:
-    
-VF        a, b: 두 양의 정수
         a, b: 두 양의 정수
+    
     Returns:
         최소공배수
     """
     # TODO: LCM 계산
-    return (a * b) // gcd(a, b)
+    
+    return int((a*b) / gcd(a, b))
 
 def extended_gcd(a, b):
     """
@@ -88,16 +91,18 @@ def extended_gcd(a, b):
     # base case: b가 0이면 (a, 1, 0) 반환    
     # recursive case
     # 역추적하며 x, y 계산
-    r0, x0, y0 = a, 1, 0
-    r1, x1, y1 = b, 0, 1
+    
+    if b == 0:
+        return (a, 1, 0)
 
-    while r1 !=  0:
-        q = r0 // r1
-        r0, r1 = r1, r0 - q * r1
-        x0, x1 = x1, x0 - q * x1
-        y0, y1 = y1, y0 - q * y1
 
-    return r0, x0, y0
+    r, x1, y1 = extended_gcd(b, a%b)
+
+    x = y1
+    y = x1 - (a//b)*y1
+
+    return (r, x, y)
+
 
 def is_prime(n):
     """
@@ -113,20 +118,20 @@ def is_prime(n):
     # n이 2보다 작으면 False
     # 2부터 sqrt(n)까지 나누어 떨어지는지 확인    
     # 3부터 sqrt(n)까지 홀수만 확인
-    if n < 2 :
-        return False
-    if n == 2 or n == 3:
-        return True
+    
+    plag = False
+    sqrt = int((n ** 0.5))
 
-    sqn = int(n**0.5)
+    if n < 2:
+        return plag
 
-    for i in range(2, sqn+1):
-        if n % i == 0:
-            return False
+    for div in range(2, sqrt+1):
+        if n % div == 0:
+            return plag
 
-    return True
-                
+    plag = True
 
+    return plag
 
 # 테스트 케이스
 if __name__ == "__main__":
