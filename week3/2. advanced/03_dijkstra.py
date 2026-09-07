@@ -79,7 +79,42 @@ def dijkstra(n: int, edges: list, start: int) -> list:
     # TODO: dist 를 INF 로 초기화하고 dist[start] = 0
     # TODO: 우선순위 큐(heapq)로 BFS-like 최단경로 탐색
     # TODO: dist 반환
-    pass
+    
+    graph = [[] for i in range(n)]
+    for u, v, w in edges:
+        graph[u].append((v, w))
+
+    dist = [INF for _ in range(n)]
+    dist[start] = 0
+
+    pq = [(0, start)]
+
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]: continue
+        for v, w in graph[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(pq, (dist[v], v))
+        
+        
+    """
+    1. (0, start)를 큐에 넣는다  (시작점까지 거리는 0)
+    2. 큐가 빌 때까지:
+        - 큐에서 "지금 거리 기준 가장 작은" (d, u)를 꺼낸다
+        - 만약 d가 이미 알고 있는 dist[u]보다 크면 -> 낡은 정보이니 건너뛴다
+        - u의 이웃 (v, w) 각각에 대해:
+            - u를 거쳐서 v로 가는 거리(dist[u] + w)가, 지금까지 알던 dist[v]보다 짧다면
+                - dist[v]를 갱신한다
+                - (새로운 거리, v)를 큐에 넣는다
+    3. dist 반환
+    """
+
+
+ 
+
+    return dist
+    
 
 
 def _format(dist):
